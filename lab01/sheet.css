@@ -1,0 +1,105 @@
+/* COMMON */
+:root {
+  --text-color-initial: #AFA; 
+  --text-color-final: #FAF; 
+}
+
+.box.right-panel h1, .box.title h1, .box.main-content h1 {
+  animation: colorChange 4s infinite; /* 4s to czas trwania animacji */
+}
+
+@keyframes colorChange {
+  0% {
+    color: var(--text-color-initial);
+  }
+  50% {
+    color: var(--text-color-final);
+  }
+  100% {
+    color: var(--text-color-initial);
+  }
+}
+
+
+.box {
+  padding: 15px;
+  border: 2px solid #000000;
+  background-color: azure;
+}
+
+/* STOP COMMON */
+
+/* PC and Tablet */
+
+@media screen and (min-width: 768px) {
+  body {
+    font-size: calc(8px + 0.5vw);
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: auto repeat(4, 1fr);
+    grid-template-areas:
+      "title title title title title title title title"
+      "left-panel . . . . right-panel right-panel right-panel"
+      "main main main main . right-panel right-panel right-panel"
+      "main main main main . . . ."
+      "main main main main . . . ."
+      "footer footer footer footer footer footer footer footer";
+    gap: 10px;
+  }
+
+  .title {
+    grid-area: title;
+    
+  }
+
+  .left-panel {
+    grid-area: left-panel;
+  }
+
+  .right-panel {
+    grid-area: right-panel;
+  }
+
+  .main-content {
+    grid-area: main;
+  }
+
+  .footer {
+    grid-area: footer;
+  }
+}
+/* STOP PC and Tablet */
+
+
+/* Mobile First Design */
+
+@media screen and (max-width:768px) {
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: auto;
+    gap: 10px;
+  }
+
+  body {
+    font-size: calc(8px + 0.5vw);
+  }
+
+  .container {
+    display: block;
+  }
+
+  .box {
+    margin-bottom: 10px;
+  }
+
+  /* Dodatkowe style dla telefonów, jeśli potrzebne */
+  .box h1 {
+    font-size: 1.5em;
+  }
+}
+/* STOP Mobile First Design */
