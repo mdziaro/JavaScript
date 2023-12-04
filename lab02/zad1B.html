@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DOM 0 Event Handling</title>
+    <script src="zad1.js"></script>
+  </head>
+  <body onLoad="
+            console.log('Tekst 1');
+            window.alert('Tekst 2');
+          ">
+    <div>Treść dokumentu HTML</div>
+    <div>Treść dokumentu HTML</div>
+    <div>Treść dokumentu HTML</div>
+    <script>
+        window.prompt("Tekst1","Tekst2");
+    </script>
+    <form oninput="wynik.value = pole_tekstowe.value + pole_liczbowe.value">
+      <input id="pole_tekstowe" type="text" placeholder="Wprowadź tekst">
+      +
+      <input id="pole_liczbowe" type="number" placeholder="Wprowadź liczbę">    
+      =
+      <output name="wynik" for="pole_tekstowe pole_liczbowe">Tu pojawi się wynik obliczeń</output>    
+      <br>    
+      <input type="button" value="Wypisz" onclick="funkcja_zwrotna()">
+    </form>
+  </body>
+</html>
