@@ -78,8 +78,6 @@
     document.addEventListener("DOMContentLoaded", function () {
     var dropdown = document.querySelector(".dropdown");
     var dropdownContent = document.querySelector(".dropdown-content");
-    var orientation = 0; // Początkowa wartość orientacji
-    var carBoxes = document.querySelectorAll(".car-box");
 
     dropdown.addEventListener("click", function () {
       dropdownContent.classList.toggle("active");
@@ -90,14 +88,7 @@
       }
     });
 
-    carBoxes.forEach(function (box) {
-        box.addEventListener("mouseenter", function () {
-            orientation += 360; // Zwiększ orientację o 360 stopni przy najechaniu myszką
-            box.style.setProperty("--orientation", orientation + "deg");
-        });
-    });
-
-    // Dodany fragment kodu do schowania dropdowna po kliknięciu poza nim
+    // kod do schowania dropdowna po kliknięciu poza nim
     document.addEventListener("click", function (event) {
       if (!event.target.closest(".dropdown")) {
         dropdownContent.classList.remove("active");
