@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8">
+    <title>Logo Sklepu Częściami Samochodowymi</title>
+  </head>
+  <body>
+    <main>
+      <h1>Logo Sklepu Częściami Samochodowymi</h1>
+      <canvas id="canvas" width="500" height="400" style="border:1px solid #000000;">
+        Twoja przeglądarka nie obsługuje elementu "canvas" 
+      </canvas>
+    </main>
+    <script>
+        "use strict";
+      
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var centerX1 = canvas.width / 8; // Nowe współrzędne dla pierwszego koła
+        var centerX2 = 6 * canvas.width / 7; // Nowe współrzędne dla drugiego koła
+        var centerY = canvas.height / 2 ; // Przesunięcie w dół
+        var radius = 40;
+        var triangleCount = 12; // Liczba trójkątów
+      
+        function draw_circle(centerX, centerY, radius, color, triangleColor) {
+          // Rysowanie okręgu
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+          ctx.fillStyle = color;
+          ctx.fill();
+          ctx.stroke();
+      
+          // Rysowanie trójkątów dookoła okręgu
+          var angle = (2 * Math.PI) / triangleCount;
+          for (var i = 0; i < triangleCount; i++) {
+            var x1 = centerX + radius * Math.cos(i * angle);
+            var y1 = centerY + radius * Math.sin(i * angle);
+      
+            var x2 = centerX + radius * Math.cos((i + 1) * angle);
+            var y2 = centerY + radius * Math.sin((i + 1) * angle);
+      
+            // Rysowanie trójkąta
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.closePath();
+            ctx.fillStyle = triangleColor;
+            ctx.fill();
+            ctx.stroke();
+            i++;
+          }
+        }
+        // Rysowanie prostokąta między kołami
+        var rectWidth = 100;
+        var rectHeight = 150;
+        ctx.fillStyle = '#3333EE'; // niebieski
+        ctx.fillRect(rectWidth * 0.2, centerY - rectHeight, rectWidth * 4.5, rectHeight);
+
+        // Rysowanie okna
+        var rectWidth = 100;
+        var rectHeight = 150;
+        ctx.fillStyle = '#DDDDDD'; 
+        ctx.fillRect(rectWidth * 3.5, rectHeight*0.7, rectWidth * 1, rectHeight*0.5);
+      
+        // Rysowanie pierwszego okręgu
+        draw_circle(centerX1, centerY, radius, '#0A0A0A', '#DDDDDD'); 
+      
+        // Rysowanie drugiego okręgu
+        draw_circle(centerX2, centerY, radius, '#0A0A0A', '#DDDDDD'); 
+      
+        var text = "Auto-Pol";
+        ctx.fillStyle = "#FF00AA"; // Biały kolor tekstu
+        ctx.font = "50px Comic Sans MS"; // Ustawienie czcionki
+        ctx.fillText(text, canvas.width / 2 - ctx.measureText(text).width / 1.5, centerY*0.7);
+      </script>      
+  </body>
+</html>

@@ -4,7 +4,6 @@ function sum(x,y) {
     return x+y;
 }
 
-
 function sum_strings(a) {
     return a.reduce((sum, str) => {
         const num = parseFloat(str);
