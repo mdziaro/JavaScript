@@ -237,6 +237,7 @@ footer {
 }
 
 #canvas{
-  display:block;
+  display:flex;
+  align-self:center;
 }
 }

@@ -13,6 +13,7 @@
 <body>
   <header>
     <div class="nav-panel">
+      
       <canvas id="canvas" width="200px" height="100px"></canvas>
       
       <div class="search-box">
@@ -89,6 +90,13 @@
   </div>
 
   <footer>
+    <form id="commandForm">
+      <label for="commandInput">Linia komend:</label>
+      <input type="text" id="commandInput" placeholder="Wprowadź polecenie">
+      <button type="button" onclick="executeCommand()">Wykonaj</button>
+    </form>
+  
+    <script src="console.js"></script>
     <p>&copy; 2023 Car Dealership</p>
   </footer>
 
