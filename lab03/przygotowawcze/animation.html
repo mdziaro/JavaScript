@@ -4,10 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Animation</title>
 </head>
 
 <body>
+    <div id="counter1"></div>
+    <div id="counter2"></div>
+
     <form onsubmit="event.preventDefault();">
         <h2>requestAnimationFrame()</h2>
         <label for="counter">Counter→</label>
@@ -15,7 +19,7 @@
         <br>
         <button id="start" onclick="startAnimation()">Start</button>
         <button id="stop" disabled onclick="stopAnimation()">Stop</button>
-        <!-- ************************************************************** -->
+        
         <hr>
         <h2>Time-consuming calculations in the main thread</h2>
         <label for="result_main">Result:</label>
@@ -39,6 +43,22 @@
 
     </form>
     <script src="animation.js"></script>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+
+    <script type="text/babel" src="counter.js"></script>
+
+    <script type="text/babel">
+        // Renderowanie liczników
+        const container1 = document.getElementById('counter1');
+        const root1 = ReactDOM.createRoot(container1);
+        root1.render(<Counter initial="10" delay="1000" />);
+
+        const container2 = document.getElementById('counter2');
+        const root2 = ReactDOM.createRoot(container2);
+        root2.render(<Counter initial="15" delay="500" />);
+    </script>
 </body>
 
 </html>
