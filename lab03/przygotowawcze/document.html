@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Tytuł strony</title>
+</head>
+<body>
+  <div class="container">
+    <header class="box title" id="title">
+      <h1>Tytuł strony</h1>
+    </header>
+
+    <nav class="box left-panel" id="left-panel">
+      <ul class="azure">
+        <li>
+          <a href="">Element 1</a>
+        </li>
+        <li>
+          <a href="">Element 2</a>
+        </li>
+      </ul>
+    </nav>
+    
+    <aside class="box right-panel azure" id="right-panel">
+      <h1>Panel boczny</h1>
+      <h2>Ciekawe odsyłacze</h2>
+      <ul>
+        <li>
+          <a href="">Odsyłacz 1</a>
+        </li>
+        <li>
+          <a href="">Odsyłacz 2</a>
+        </li>
+        <li>
+          <a href="">Odsyłacz 3</a>
+        </li>
+      </ul>
+    </aside>
+    
+    <main class="box main-content azure" id="main-content">
+        <h1>Treść strony</h1>
+        <div id="concert-description"></div>
+      </main>
+    
+    <footer class="box footer" id="footer">
+      <a href="mailto:your.email.address">Michał Dziarkowski</a>
+    </footer>
+  </div>
+
+  <form id="styleForm">
+    <button type="button" onclick="setStyles()">Set</button>
+    <button type="button" onclick="deleteStyles()">Delete</button>
+    <button type="button" id="ParButton" onclick="addParagraph()">Add</button>
+  </form>
+
+  <script>
+    function setStyles() {
+    const title = document.getElementById('title');
+    const leftPanel = document.getElementById('left-panel');
+    const rightPanel = document.getElementById('right-panel');
+    const mainContent = document.getElementById('main-content');
+    const footer = document.getElementById('footer');
+
+    // Manipulacja stylami
+    title.style.border = '2px solid #000000';
+    title.style.backgroundColor = 'azure';
+    title.style.gridArea = 'title';
+
+    leftPanel.style.border = '2px solid #000000';
+    leftPanel.style.backgroundColor = 'azure';
+    leftPanel.style.gridArea = 'left-panel';
+
+    rightPanel.style.border = '2px solid #000000';
+    rightPanel.style.backgroundColor = 'azure';
+    rightPanel.style.gridArea = 'right-panel';
+
+    mainContent.style.border = '2px solid #000000';
+    mainContent.style.backgroundColor = 'azure';
+    mainContent.style.gridArea = 'main';
+
+    footer.style.border = '2px solid #000000';
+    footer.style.backgroundColor = 'azure';
+    footer.style.gridArea = 'footer';
+
+    const container = document.querySelector('.container');
+    container.style.display = 'grid';
+    container.style.gridTemplateColumns = 'repeat(8, 1fr)';
+    container.style.gridTemplateRows = 'auto repeat(4, 1fr)';
+    container.style.gridTemplateAreas = `
+      "title title title title title title title title"
+      "left-panel . . . . right-panel right-panel right-panel"
+      "main main main main . right-panel right-panel right-panel"
+      "main main main main . . . ."
+      "main main main main . . . ."
+      "footer footer footer footer footer footer footer footer"
+    `;
+    container.style.gap = '10px';
+}
+function deleteStyles() {
+      // Usunięcie wszystkich stylów
+    const title = document.getElementById('title');
+    const leftPanel = document.getElementById('left-panel');
+    const rightPanel = document.getElementById('right-panel');
+    const mainContent = document.getElementById('main-content');
+    const footer = document.getElementById('footer');
+    const container = document.querySelector('.container');
+
+    title.style.border = '';
+    title.style.backgroundColor = '';
+    title.style.gridArea = '';
+
+    leftPanel.style.border = '';
+    leftPanel.style.backgroundColor = '';
+    leftPanel.style.gridArea = '';
+
+    rightPanel.style.border = '';
+    rightPanel.style.backgroundColor = '';
+    rightPanel.style.gridArea = '';
+
+    mainContent.style.border = '';
+    mainContent.style.backgroundColor = '';
+    mainContent.style.gridArea = '';
+
+    footer.style.border = '';
+    footer.style.backgroundColor = '';
+    footer.style.gridArea = '';
+
+    // Usunięcie stylów kontenera
+    container.style.display = '';
+    container.style.gridTemplateColumns = '';
+    container.style.gridTemplateRows = '';
+    container.style.gridTemplateAreas = '';
+    container.style.gap = '';
+}
+
+let paragraphCount = 0;
+
+const paragraphs = [
+  `Natenczas Wojski chwycił na taśmie przypięty Swój róg bawoli, długi, cętkowany, kręty Jak wąż boa, oburącz do ust go przycisnął, Wzdął policzki jak banię, w oczach krwią zabłysnął, Zasunął wpół powieki, wciągnął w głąb pół brzucha I do płuc wysłał z niego cały zapas ducha, I zagrał: róg jak wicher, wirowatym dechem Niesie w puszczę muzykę i podwaja echem.`,
+  `Umilkli strzelcy, stali szczwacze zadziwieni Mocą, czystością, dziwną harmoniją pieni. Starzec cały kunszt, którym niegdyś w lasach słynął, Jeszcze raz przed uszami myśliwców rozwinął; Napełnił wnet, ożywił knieje i dąbrowy, Jakby psiarnię w nie wpuścił i rozpoczął łowy.`,
+  `Bo w graniu była łowów historyja krótka: Zrazu odzew dźwięczący, rześki: to pobudka; Potem jęki po jękach skomlą: to psów granie; A gdzieniegdzie ton twardszy jak grzmot: to strzelanie.`
+];
+
+// Modified addParagraph function to accept dynamic content
+function addParagraph() {
+  const concertDescription = document.getElementById('concert-description');
+  const paragraph = document.createElement('p');
+  
+  paragraph.textContent = paragraphs[paragraphCount]; // Use paragraphs[paragraphCount] instead of paragraph[paragraphCount]
+  concertDescription.appendChild(paragraph);
+
+  paragraphCount++;
+  updateButtonState();
+}
+
+
+    function updateButtonState() {
+      const addButton = document.getElementById('ParButton');
+      addButton.disabled = paragraphCount >= paragraphs.length;
+    }
+  </script>
+</body>
+</html>
