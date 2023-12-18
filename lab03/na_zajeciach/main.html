@@ -13,7 +13,6 @@
 <body>
   <header>
     <div class="nav-panel">
-      
       <canvas id="canvas" width="200px" height="100px"></canvas>
       
       <div class="search-box">
@@ -40,9 +39,7 @@
       </div>
     </div>
   </header>
-  <div class="canvas-container">
-    
-  </div>
+  <div class="canvas-container"></div>
   <div class="car-container">
     <!-- Car 1 -->
     <div class="car-box" id="car1"></div>
@@ -61,12 +58,10 @@
   </div>
 
   <footer>
-    <form id="commandForm">
-      <label for="commandInput">Linia komend:</label>
-      <input type="text" id="commandInput" placeholder="Wprowadź polecenie">
-      <button type="button" onclick="executeCommand()">Wykonaj</button>
-    </form>
-  
+    <button onclick="listProducts()">Dostępne Produkty</button>
+    <button onclick="listCustomers()">Lista Klientów</button>
+    <button onclick="showPurchaseHistory()">Historia Zakupów Klienta</button>
+
     <script src="console.js"></script>
     <p>&copy; 2023 Car Dealership</p>
   </footer>
@@ -146,6 +141,7 @@
   var dropdown = document.querySelector(".dropdown");
   var dropdownContent = document.querySelector(".dropdown-content");
   var mobileMenu = document.querySelector(".mobile-menu");
+
 
   dropdown.addEventListener("click", function (event) {
     event.stopPropagation(); // Stop the event from reaching the document click handler

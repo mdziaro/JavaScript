@@ -170,58 +170,23 @@ function updateAvailableStock(productId, soldQuantity) {
 
 
 
-function executeCommand() {
-  const commandInput = document.getElementById('commandInput').value;
-  const commandArgs = commandInput.split(' ');
+function listProducts() {
+  console.log('Dostępne Produkty:');
+  listproducts();
+}
 
-  const command = commandArgs[0].toLowerCase();
-  
+function listCustomers() {
+  console.log('Lista Klientów:');
+  listCustomers();
+}
 
-  switch (command) {
-    case 'sell':
-      const customerFullName = `${commandArgs[1]} ${commandArgs[2]}`;
-      const productId = parseInt(commandArgs[3]);
-      const quantity = parseInt(commandArgs[4]);
-      if (!isNaN(productId) && !isNaN(quantity) && commandArgs[1] && commandArgs[2]) {
-        sellproduct(customerFullName, productId, quantity);
-      } else {
-        console.error('Nieprawidłowe argumenty. Użyj: "sell [imię] [nazwisko] [id_produktu] [ilosc] "');
-      }
-      break;
-    case 'lista':
-      const product = commandArgs[1];
-      if (product === 'produktów') {
-        console.group('Lista Produktów');
-        listproducts();
-        console.groupEnd();
-      } else if (product === 'klientów') {
-        console.group('Lista Klientów');
-        listCustomers();
-        console.groupEnd();
-      } else {
-        console.error('Nieznane polecenie. Wprowadź poprawne polecenie.');
-      }
-      break;
-    case 'historia':
-      const customerId = parseInt(commandArgs[1]);
-      if (!isNaN(customerId)) {
-        console.group(`Historia zakupów dla klienta ID ${customerId}`);
-        listCustomerPurchases(customerId);
-        console.groupEnd();
-      } else {
-          console.error('Nieprawidłowy identyfikator klienta. Użyj: "historia [id_klienta]"');
-        }
-      break;
-    case 'help':
-      console.group('Pomoc');
-      help();
-      console.groupEnd();
-      break;
-    default:
-      console.error('Nieznane polecenie. Wprowadź poprawne polecenie.');
-      break;
+function showPurchaseHistory() {
+  const customerName = prompt('Podaj nazwę klienta:');
+  if (customerName) {
+    listCustomerPurchases(customerName);
+  } else {
+    console.error('Nieprawidłowa nazwa klienta.');
   }
-  renderproductsFromDB();
 }
 
 
@@ -344,11 +309,14 @@ function updateproductAvailability(productId, isAvailable) {
 
 }
 
-function listCustomerPurchases(customerId) {
+function listCustomerPurchases(customerName) {
   dbPromise.then(db => {
     const transaction = db.transaction('customers', 'readonly');
     const customerStore = transaction.objectStore('customers');
-    const request = customerStore.get(customerId);
+    
+    // Użyj indeksu 'fullName', aby znaleźć klienta na podstawie imienia i nazwiska
+    const customerIndex = customerStore.index('fullName');
+    const request = customerIndex.get(customerName.split(' '));
 
     request.onsuccess = function (event) {
       const customer = event.target.result;
