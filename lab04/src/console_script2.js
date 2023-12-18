@@ -3,8 +3,16 @@ import { argv } from 'node:process';
 import readline from 'readline';
 import { exec } from 'child_process';
 
+/**
+ * Zmienna przechowująca nazwę pliku, w którym zapisywana jest liczba uruchomień.
+ * @type {string}
+ */
 const filename = 'licznik_uruchomien.txt';
 
+/**
+ * Inkrementuje licznik uruchomień aplikacji i wyświetla go w konsoli.
+ * @returns {Promise<void>} Obietnica reprezentująca zakończenie operacji.
+ */
 async function incrementCounter() {
   try {
     let count = 1;
@@ -24,6 +32,10 @@ async function incrementCounter() {
   }
 }
 
+/**
+ * Wykonuje komendy systemowe podane przez użytkownika.
+ * @returns {Promise<void>} Obietnica reprezentująca zakończenie operacji.
+ */
 async function executeCommands() {
   console.log('Wprowadź komendy — naciśnięcie Ctrl+D kończy wprowadzanie danych');
 
@@ -50,6 +62,10 @@ async function executeCommands() {
   });
 }
 
+/**
+ * Główna funkcja programu, rozpoznaje tryb działania na podstawie argumentów wiersza poleceń.
+ * @returns {Promise<void>} Obietnica reprezentująca zakończenie operacji.
+ */
 async function main() {
   if (argv.includes('--sync')) {
     await incrementCounter();
@@ -70,4 +86,5 @@ async function main() {
   }
 }
 
+// Uruchom główną funkcję programu
 main();

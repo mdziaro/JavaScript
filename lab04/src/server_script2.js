@@ -3,11 +3,28 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+/**
+ * Zmienna przechowująca ścieżkę do bieżącego pliku.
+ * @type {string}
+ */
 const __filename = fileURLToPath(import.meta.url);
+
+/**
+ * Zmienna przechowująca katalog bieżącego pliku.
+ * @type {string}
+ */
 const __dirname = dirname(__filename);
 
+/**
+ * Ścieżka do pliku gościnnego.
+ * @type {string}
+ */
 const guestbookFilePath = join(__dirname, 'guestbook.txt');
 
+/**
+ * Funkcja wczytująca wpisy z księgi gościnnej.
+ * @returns {string[]} Tablica wpisów.
+ */
 function loadGuestbook() {
     try {
         const data = fs.readFileSync(guestbookFilePath, 'utf8');
@@ -18,11 +35,20 @@ function loadGuestbook() {
     }
 }
 
+/**
+ * Funkcja zapisująca nowy wpis w księdze gościnnej.
+ * @param {string} name - Imię i nazwisko autora wpisu.
+ * @param {string} message - Treść wpisu.
+ */
 function saveEntry(name, message) {
     const entry = `${name}\n${message}\n`;
     fs.appendFileSync(guestbookFilePath, entry);
 }
 
+/**
+ * Generuje HTML na podstawie wczytanych wpisów z księgi gościnnej.
+ * @returns {string} Wygenerowany HTML.
+ */
 function generateGuestbookHTML() {
     const entries = loadGuestbook();
     let guestbookHTML = '';
@@ -43,6 +69,11 @@ function generateGuestbookHTML() {
     return guestbookHTML;
 }
 
+/**
+ * Obsługuje żądanie HTTP.
+ * @param {http.IncomingMessage} request - Obiekt reprezentujący przychodzące żądanie.
+ * @param {http.ServerResponse} response - Obiekt reprezentujący odpowiedź serwera.
+ */
 function handleRequest(request, response) {
     if (request.method === 'GET' && request.url === '/') {
         const guestbookHTML = generateGuestbookHTML();
@@ -106,9 +137,19 @@ function handleRequest(request, response) {
     }
 }
 
+/**
+ * Obiekt serwera HTTP.
+ * @type {http.Server}
+ */
 const server = http.createServer(handleRequest);
+
+/**
+ * Port, na którym serwer nasłuchuje.
+ * @type {number}
+ */
 const port = 8000;
 
+// Start serwera
 server.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}/`);
 });

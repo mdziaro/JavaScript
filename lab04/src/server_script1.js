@@ -93,6 +93,24 @@ function requestListener(request, response) {
             response.end(); // The end of the response — send it to the browser
             break;
 
+            case 'POST /':
+                let body = ''; // Zmienna, która będzie przechowywać dane z ciała żądania POST
+                request.on('data', (chunk) => {
+                    body += chunk;
+                });
+            
+                request.on('end', () => {
+                    // Tutaj możesz przetworzyć dane z ciała żądania (body)
+                    const parsedBody = new URLSearchParams(body);
+                    const name = parsedBody.get('name');
+            
+                    // Tworzenie odpowiedzi serwera
+                    response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+                    response.write(`Hello ${name}`);
+                    response.end();
+                });
+                break;
+
         /* 
           ----------------------
           If no route is matched 
