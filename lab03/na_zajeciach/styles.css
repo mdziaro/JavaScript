@@ -1,0 +1,252 @@
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f1f1f1;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+}
+
+.nav-panel {
+  display: flex;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  display:none;
+  flex-wrap: wrap;
+  margin-right: 20px;
+  order:3;
+}
+
+.search-box input {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  width: 120px;
+}
+
+.search-box button {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.dropdown {
+  display: flex;
+  display:none;
+  margin-left:auto;   
+}
+
+.dropbtn {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.dropdown-content.active {
+  display: block;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.car-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px 20px 20px;
+}
+
+
+
+.car-box {
+  width: 100%;
+  width:max-content;
+  margin: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation-name: rotate;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  animation-timing-function: linear;
+}
+
+.out-of-stock {
+  filter: grayscale(100%);
+  background-color: #f0f0f0; 
+}
+
+.car-box:hover {
+  animation-play-state: running;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.car-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.car-info {
+  padding: 15px;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.canvas-container {
+  padding: 90px 20px 0px 20px  ;
+}
+
+.mobile-menu {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.hamburger {
+  width: 30px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bar {
+  width: 30px;
+  height: 3px;
+  background-color: #fff;
+}
+
+
+
+
+  .mobile-menu {
+    display: block;
+    margin-left: auto;
+    order:3;
+  }
+  
+  .mobile-menu.active {
+    margin-right: 20px;
+    order:3;
+  }
+
+  .mobile-menu .hamburger {
+    margin-right: 20px;
+  }
+
+  .mobile-menu.active .hamburger {
+    background-color: transparent;
+    
+  }
+
+  .mobile-menu.active .dropdown{
+    display:flex;
+  }
+
+  .search-box.active {
+    display: flex;
+    margin-right: auto;
+  }
+
+  .dropdown.active {
+    display: block;
+  }
+
+  #canvas{
+    display:none;
+  }
+
+  
+
+
+/* Media Query for screens larger than 600px */
+@media (min-width: 600px) {
+  .search-box {
+    margin-right: 0;
+    margin-left:30px;
+    display:block;
+  }
+
+  .mobile-menu{
+    display:none;
+  }
+
+
+.dropdown {
+  display: block;
+}
+
+.mobile-menu {
+  display:  none;
+}
+
+
+.search-box.active {
+  display: flex;
+  margin-right: auto;
+}
+
+.dropdown.active {
+  display: block;
+}
+
+#canvas{
+  display:flex;
+  align-self:center;
+}
+}

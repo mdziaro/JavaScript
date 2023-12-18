@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+  <title>Witryna Samochodowa</title>
+</head>
+<body>
+  <header>
+    <div class="nav-panel">
+      
+      <canvas id="canvas" width="200px" height="100px"></canvas>
+      
+      <div class="search-box">
+        <input type="text" placeholder="Szukaj...">
+        <button><i class="bi bi-search"></i></button>
+      </div>
+      
+      <div class="dropdown">
+        <button class="dropbtn">Pojazdy <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-content">
+          <a href="#">Osobowe</a>
+          <a href="#">Sportowe</a>
+          <a href="#">SUV-y</a>
+        </div>
+      </div>
+
+      <!-- Dodane hamburger menu -->
+      <div class="mobile-menu">
+        <div class="hamburger" onclick="toggleMenu()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="canvas-container">
+    
+  </div>
+  <div class="car-container">
+    <!-- Car 1 -->
+    <div class="car-box" id="car1"></div>
+
+    <!-- Car 2 -->
+    <div class="car-box" id="car2"></div>
+
+    <!-- Car 3 -->
+    <div class="car-box" id="car3"></div>
+
+    <!-- Car 4 -->
+    <div class="car-box" id="car4"></div>
+
+    <!-- Nowe Auta -->
+
+  </div>
+
+  <footer>
+    <form id="commandForm">
+      <label for="commandInput">Linia komend:</label>
+      <input type="text" id="commandInput" placeholder="Wprowadź polecenie">
+      <button type="button" onclick="executeCommand()">Wykonaj</button>
+    </form>
+  
+    <script src="console.js"></script>
+    <p>&copy; 2023 Car Dealership</p>
+  </footer>
+
+  <script>
+    "use strict";
+
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = parseInt(canvas.getAttribute("width"));
+    canvas.height = parseInt(canvas.getAttribute("height"));
+    ctx.scale(.5, 1);
+
+    // Nowe współrzędne dla pierwszego koła
+    var centerX1 = canvas.width / 2;
+    // Nowe współrzędne dla drugiego koła
+    var centerX2 = 1.4*canvas.width ;
+    // Przesunięcie w dół
+    var centerY = canvas.height / 2;
+    var radius = canvas.height/4;
+    var triangleCount = 12; // Liczba trójkątów
+
+    function draw_circle(centerX, centerY, radius, color, triangleColor) {
+      // Rysowanie okręgu
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.stroke();
+
+      // Rysowanie trójkątów dookoła okręgu
+      var angle = (2 * Math.PI) / triangleCount;
+      for (var i = 0; i < triangleCount; i++) {
+        var x1 = centerX + radius * Math.cos(i * angle);
+        var y1 = centerY + radius * Math.sin(i * angle);
+
+        var x2 = centerX + radius * Math.cos((i + 1) * angle);
+        var y2 = centerY + radius * Math.sin((i + 1) * angle);
+
+        // Rysowanie trójkąta
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.closePath();
+        ctx.fillStyle = triangleColor;
+        ctx.fill();
+        ctx.stroke();
+        i++;
+      }
+    }
+
+    // Rysowanie prostokąta między kołami
+    var rectWidth = canvas.width*0.3
+    var rectHeight = canvas.height*0.4
+    ctx.fillStyle = '#3333EE'; // niebieski
+    ctx.fillRect(rectWidth, centerY - rectHeight, rectWidth * 4.5, rectHeight);
+
+
+    ctx.fillStyle = '#DDDDDD';
+    ctx.fillRect(rectWidth * 2.7, rectHeight * 0.05, rectWidth * .3, rectHeight * 0.2);
+
+    // Rysowanie pierwszego okręgu
+    draw_circle(centerX1, centerY, radius, '#0A0A0A', '#DDDDDD');
+
+    // Rysowanie drugiego okręgu
+    draw_circle(centerX2, centerY, radius, '#0A0A0A', '#DDDDDD');
+
+    var text = "Auto-Pol";
+    ctx.fillStyle = "#FF00AA"; // Biały kolor tekstu
+    ctx.font = "2em Comic Sans MS"; // Ustawienie czcionki
+    ctx.fillText(text, canvas.width - ctx.measureText(text).width/2 , centerY * 0.7);
+  </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  var dropdown = document.querySelector(".dropdown");
+  var dropdownContent = document.querySelector(".dropdown-content");
+  var mobileMenu = document.querySelector(".mobile-menu");
+
+  dropdown.addEventListener("click", function (event) {
+    event.stopPropagation(); // Stop the event from reaching the document click handler
+    dropdownContent.classList.toggle("active");
+    if (dropdownContent.style.maxHeight) {
+      dropdownContent.style.maxHeight = null;
+    } else {
+      dropdownContent.style.maxHeight = dropdownContent.scrollHeight + "px";
+    }
+  });
+
+  mobileMenu.addEventListener("click", function () {
+    dropdownContent.classList.toggle("active");
+    if (dropdownContent.style.maxHeight) {
+      dropdownContent.style.maxHeight = null;
+    } else {
+      dropdownContent.style.maxHeight = dropdownContent.scrollHeight + "px";
+    }
+  });
+
+  // code to hide dropdown when clicking outside of it
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest(".dropdown") && !event.target.closest(".mobile-menu")) {
+      dropdownContent.classList.remove("active");
+      dropdownContent.style.maxHeight = null;
+    }
+  });
+});
+
+function toggleMenu() {
+  var searchBox = document.querySelector('.search-box');
+  var dropdown = document.querySelector('.dropdown');
+
+  searchBox.classList.toggle('active');
+  dropdown.classList.toggle('active'); 
+}
+
+  </script>
+</body>
+</html>
