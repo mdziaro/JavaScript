@@ -49,6 +49,7 @@ db.getCollection(collection).deleteMany({});
 // Utwórz kilka dokumentów / rekordów w kolekcji students
 db.students.insertMany([
   { "firstName": "Jan", "lastName": "Kowalski", "departmentAcronym": "WIET" },
+  { "firstName": "Michał", "lastName": "Dziarkowski", "departmentAcronym": "WIET" },
   { "firstName": "Anna", "lastName": "Nowak", "departmentAcronym": "WMS" },
   { "firstName": "Adam", "lastName": "Mickiewicz", "departmentAcronym": "WI" }
 ]);

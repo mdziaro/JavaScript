@@ -26,7 +26,20 @@ client.connect()
         // Ustawienie silnika widoków na Pug
         app.set('view engine', 'pug');
 
-        // Obsługa formularza GET
+        app.get('/', async (request, response) => {
+            try {
+                // Pobierz wszystkich studentów z bazy danych
+                const allStudents = await client.db('AGH').collection('students').find().toArray();
+        
+                // Renderowanie widoku 'students' i przekazanie danych
+                response.render('students', { students: allStudents, showDepartmentColumn: false });
+            } catch (error) {
+                console.error('Error retrieving all students:', error);
+                response.status(500).send('Internal Server Error');
+            }
+        });
+
+
         app.get('/:department', async (request, response) => {
             const { department } = request.params;
             const departmentAcronym = department.toUpperCase();

@@ -8,15 +8,16 @@ app.locals.pretty = app.get('env') === 'development';
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 
+
 // Tablica obiektów students
 let students = [
     {
-        fname: 'Jan',
-        lname: 'Kowalski',
+        firstName: 'Jan',
+        lastName: 'Kowalski'
     },
     {
-        fname: 'Anna',
-        lname: 'Nowak',
+        firstName: 'Anna',
+        lastName: 'Nowak'
     },
 ];
 
@@ -36,6 +37,11 @@ app.get('/', (request, response) => {
 app.get('/students', (request, response) => {
     // Renderowanie widoku 'students' i przekazanie tablicy students
     response.render('students', { students });
+});
+
+app.post('/', (request, response) => {
+    response.set('Content-Type', 'text/plain');
+    response.send(`Hello ${request.body.name}`);
 });
 
 app.listen(8000, () => {
