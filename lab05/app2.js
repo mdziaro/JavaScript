@@ -46,4 +46,4 @@ app.listen(8000, () => {
 app.use(express.static('public'));
 
 
-export default app; // Dodane dla testów
+export default app; 

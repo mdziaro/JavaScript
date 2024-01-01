@@ -29,8 +29,12 @@ html(lang='en')
                     tr
                         th Nazwisko
                         th Imię
+                        if showDepartmentColumn
+                            th Wydział
                 tbody
                     each student in students
                         tr
-                            td= student.lname
-                            td= student.fname
+                            td= student.lastName
+                            td= student.firstName
+                            if showDepartmentColumn
+                                td= student.departmentAcronym

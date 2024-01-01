@@ -1,5 +1,6 @@
 // const http = require('node:http');
 // const { URL } = require('node:url');
+import { clear } from 'node:console';
 import http from 'node:http';
 import { URL } from 'node:url';
 
@@ -93,23 +94,23 @@ function requestListener(request, response) {
             response.end(); // The end of the response — send it to the browser
             break;
 
-            case 'POST /':
-                let body = ''; // Zmienna, która będzie przechowywać dane z ciała żądania POST
-                request.on('data', (chunk) => {
-                    body += chunk;
-                });
-            
-                request.on('end', () => {
-                    // Tutaj możesz przetworzyć dane z ciała żądania (body)
-                    const parsedBody = new URLSearchParams(body);
-                    const name = parsedBody.get('name');
-            
-                    // Tworzenie odpowiedzi serwera
-                    response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-                    response.write(`Hello ${name}`);
-                    response.end();
-                });
-                break;
+          case 'POST /':
+              let body = ''; // Zmienna, która będzie przechowywać dane z ciała żądania POST
+              request.on('data', (chunk) => {
+                  body += chunk;
+              });
+          
+              request.on('end', () => {
+                  
+                  const parsedBody = new URLSearchParams(body);
+                  const name = parsedBody.get('name');
+          
+                  // Tworzenie odpowiedzi serwera
+                  response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+                  response.write(`Hello ${name}`);
+                  response.end();
+              });
+              break;
 
         /* 
           ----------------------
