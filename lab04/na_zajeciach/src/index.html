@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+</head>
+<body>
+  <h1>Home Page</h1>
+  
+  <form action="/history" method="get">
+    <label for="customerName">Customer Name:</label>
+    <input type="text" id="customerName" name="customer" required>
+    <button type="submit">Show History</button>
+  </form>
+
+  <form action="/add" method="get">
+    <button type="submit">Add Product</button>
+  </form>
+  
+  <form action="/products" method="get">
+    <button type="submit">Show Products</button>
+  </form>
+  
+  <form action="/customers" method="get">
+    <button type="submit">Show Customers</button>
+  </form>
+</body>
+</html>

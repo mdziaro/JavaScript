@@ -1,0 +1,42 @@
+{
+  "john_doe": [
+    {
+      "transaction_id": 1,
+      "products": ["Product1", "Product2"],
+      "productQuantities": {
+        "Product1": 2,
+        "Product2": 1
+      },
+      "total_price": 35.98
+    },
+    {
+      "transaction_id": 2,
+      "products": ["Product3"],
+      "productQuantities": {
+        "Product3": 1
+      },
+      "total_price": 5.99
+    }
+  ],
+  "jane_smith": [
+    {
+      "transaction_id": 3,
+      "products": ["Product2"],
+      "productQuantities": {
+        "Product2": 1
+      },
+      "total_price": 24.99
+    }
+  ],
+  "bob_johnson": [
+    {
+      "transaction_id": 4,
+      "products": ["Product1", "Product3"],
+      "productQuantities": {
+        "Product1": 1,
+        "Product3": 1
+      },
+      "total_price": 16.98
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+Michał
+Witam, przytulnie tutaj
+Działa?
+Działa. :)
+Jan Kowalski
+witam
+jan kowalski
+<script>
+alert("wstrzykniecie"); 
+</script>
