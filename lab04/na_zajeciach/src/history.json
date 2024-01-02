@@ -18,7 +18,7 @@
       "total_price": 4000
     }
   ],
-  "jane_smith": [
+  "anowak": [
     {
       "transaction_id": 3,
       "products": ["Fiat 500"],
@@ -28,7 +28,7 @@
       "total_price": 20000
     }
   ],
-  "bob_johnson": [
+  "pwisniewski": [
     {
       "transaction_id": 4,
       "products": ["Fiat Tipo", "Przyczepa z Plandeką"],
