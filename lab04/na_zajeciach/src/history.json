@@ -1,42 +1,42 @@
 {
-  "john_doe": [
+  "jkowalski": [
     {
       "transaction_id": 1,
-      "products": ["Product1", "Product2"],
+      "products": ["Fiat Tipo", "Fiat 500"],
       "productQuantities": {
-        "Product1": 2,
-        "Product2": 1
+        "Fiat Tipo": 2,
+        "Fiat 500": 1
       },
-      "total_price": 35.98
+      "total_price": 120000
     },
     {
       "transaction_id": 2,
-      "products": ["Product3"],
+      "products": ["Przyczepa z Plandeką"],
       "productQuantities": {
-        "Product3": 1
+        "Przyczepa z Plandeką": 1
       },
-      "total_price": 5.99
+      "total_price": 4000
     }
   ],
   "jane_smith": [
     {
       "transaction_id": 3,
-      "products": ["Product2"],
+      "products": ["Fiat 500"],
       "productQuantities": {
-        "Product2": 1
+        "Fiat 500": 1
       },
-      "total_price": 24.99
+      "total_price": 20000
     }
   ],
   "bob_johnson": [
     {
       "transaction_id": 4,
-      "products": ["Product1", "Product3"],
+      "products": ["Fiat Tipo", "Przyczepa z Plandeką"],
       "productQuantities": {
-        "Product1": 1,
-        "Product3": 1
+        "Fiat Tipo": 1,
+        "Przyczepa z Plandeką": 1
       },
-      "total_price": 16.98
+      "total_price": 24000
     }
   ]
 }
