@@ -34,6 +34,59 @@ html(lang='en')
 
                 return name;
             }
+
+             function displayResult(response_type, result) {
+                // Funkcja wyświetlająca wyniki w elemencie div o identyfikatorze "result-container"
+                const resultContainer = document.getElementById('result-container');
+                const resultDiv = document.createElement('div');
+                resultDiv.innerHTML = `<strong>${response_type.toUpperCase()}:</strong> ${JSON.stringify(result)}`;
+                resultContainer.appendChild(resultDiv);
+            }
+
+            function getTime(europe_city) {
+                return new Promise((resolve, reject) => {
+                    const url = `http://worldtimeapi.org/api/timezone/Europe/${europe_city}`;
+                    
+                    // Wykonawca obietnicy (Fetch API)
+                    fetch(url)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error(`City not found: ${response.statusText}`);
+                            }
+                        })
+                        .then(data => resolve(data))
+                        .catch(error => reject(error.message));
+                });
+            }
+
+            function getTimeAndDisplayResult() {
+                const cityInput = document.getElementById('city');
+                const resultContainer = document.getElementById('result-container');
+
+                const city = cityInput.value.trim();
+
+                if (city === '') {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.innerHTML = '<strong>Error:</strong> Please enter a European city.';
+                    resultContainer.appendChild(errorDiv);
+                    return;
+                }
+
+                getTime(city)
+                    .then(data => {
+                        const resultDiv = document.createElement('div');
+                        resultDiv.innerHTML = `<strong>Current Time in ${city}:</strong> ${data.datetime}`;
+                        resultContainer.appendChild(resultDiv);
+                    })
+                    .catch(error => {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.innerHTML = `<strong>Error:</strong> ${error}`;
+                        resultContainer.appendChild(errorDiv);
+                    });
+            }
+
             
             /**************************************************************************************/
             /* Function that performs (asynchronous) query to the web server using AJAX           */
@@ -59,17 +112,11 @@ html(lang='en')
                         console.log(`HTTP method ⟶\t\t${http_method}\nResponse type ⟶\t${response_type}\nInput data ⟶\t\t${name}`);
                         console.log(xhr.response);
                         console.groupEnd();
-                        if(show_alert)
-                            if (response_type === 'json') {
-                                // If the received data is a JSON document
-                                window.alert(JSON.stringify(xhr.response));
-                            } else if (response_type === 'document') {
-                                // If the received data is an XML document
-                                window.alert(new XMLSerializer().serializeToString(xhr.response.documentElement));
-                            } else {
-                                // If the received data is a text document
-                                window.alert(xhr.response);
-                            }
+                        if(show_alert){
+                            displayResult(response_type, xhr.response); // Dodanie wywołania funkcji displayResult
+                            results.set(`ajax ${http_method} ${response_type}`, xhr.response);
+                            dispatchEvent(received);
+                        }
                         else { 
                             results.set(`ajax ${http_method} ${response_type}`, xhr.response);
                             dispatchEvent(received); 
@@ -112,10 +159,10 @@ html(lang='en')
             /* response_type ∈ ["text", "json", "xml"]                                            */ 
             /* name - Contents of the form's text box - data that needs to be sent asynchronously */
             /**************************************************************************************/
-            function requestFetchAPI(http_method, response_type, name, show_alert=false) {
+            async function requestFetchAPI(http_method, response_type, name, show_alert = false) {
                 let accept = '*/*';
 
-                switch(response_type){
+                switch (response_type) {
                     case 'json':
                         accept = 'application/json';
                         break;
@@ -123,73 +170,77 @@ html(lang='en')
                         accept = 'application/xml';
                         break;
                 }
-                //--------------------------------------------------------------------------
-                // Configuration and execution of the (asynchronous) query to the web server
-                //--------------------------------------------------------------------------
+
                 const url = `http://localhost:8000/submit?name=${encodeURIComponent(name)}`;
-                
+
                 let fetchConfig = {
-                        method: http_method,
-                        credentials: 'include',
-                        headers: {
-                            Accept: accept,
-                        },
-                    };
+                    method: http_method,
+                    credentials: 'include',
+                    headers: {
+                        Accept: accept,
+                    },
+                };
 
                 if (http_method === 'POST') {
                     fetchConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded';
                     fetchConfig.body = `name=${encodeURIComponent(name)}`;
                 }
 
-                 fetch(url, fetchConfig)
-                    .then(async function (response) {
-                        if (!response.ok)
-                            throw Error(response.statusText);
+                try {
+                    const response = await fetch(url, fetchConfig);
 
-                        console.group('Fetch API');
-                        console.log(`HTTP method ⟶\t\t${http_method}\nResponse type ⟶\t${response_type}\nInput data ⟶\t\t${name}`);
-                        let result;
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
 
-                        if (response_type === 'json') {
-                            result = await response.json();  // Używamy await, aby poczekać na rozwiązanie obietnicy
-                        } else if (response_type === 'document') {
-                            const text = await response.text();  // Używamy await, aby poczekać na rozwiązanie obietnicy
-                            result = new DOMParser().parseFromString(text, 'application/xml');
-                        } else {
-                            result = await response.text();  // Używamy await, aby poczekać na rozwiązanie obietnicy
-                        }
+                    console.group('Fetch API');
+                    console.log(`HTTP method ⟶\t\t${http_method}\nResponse type ⟶\t${response_type}\nInput data ⟶\t\t${name}`);
+                    let result;
 
-                        console.log(result);
-                        console.groupEnd();
-                        if (show_alert)
-                            if (response_type === 'json') {
-                                // If the received data is a JSON document
-                                window.alert(JSON.stringify(result));
-                            } else if (response_type === 'document') {
-                                // If the received data is an XML document
-                                window.alert(new XMLSerializer().serializeToString(result.documentElement));
-                            } else {
-                                // If the received data is a text document
-                                window.alert(result);
-                            }
-                        else {
-                            results.set(`fetch ${http_method} ${response_type}`, result);
-                            dispatchEvent(received);
-                        }
-                    })
-                    .catch(function (error) {
-                        window.alert(error);
-                    });
+                    if (response_type === 'json') {
+                        result = await response.json();
+                    } else if (response_type === 'document') {
+                        const text = await response.text();
+                        result = new DOMParser().parseFromString(text, 'application/xml');
+                    } else {
+                        result = await response.text();
+                    }
+
+                    console.log(result);
+                    console.groupEnd();
+
+                    if (show_alert) {
+                        displayResult(response_type, result);
+                        results.set(`fetch ${http_method} ${response_type}`, result);
+                        dispatchEvent(received);
+                    } else {
+                        results.set(`fetch ${http_method} ${response_type}`, result);
+                        dispatchEvent(received);
+                    }
+                } catch (error) {
+                    window.alert(error.message);
+                }
             }
+
         script(src="https://unpkg.com/mocha/mocha.js") 
         script(type="module").
             import { expect } from 'https://unpkg.com/chai/chai.js' 
             window.expect = expect
     body
+        div#result-container
         script(class="mocha-init").
             mocha.setup('bdd');
             mocha.checkLeaks(); 
         main
+        table  
+        tr 
+            th(colspan='3', style=' background-color: #04556D;') Get Time for European
+        tr
+            th City
+            td 
+                form(id="time-form")
+                    input(type="text", id="city", name="city", placeholder="Enter European City")
+                    button(type="button", onclick="getTimeAndDisplayResult()") Get Time
             table
                 tr
                     th  
