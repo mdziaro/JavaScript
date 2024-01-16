@@ -1,0 +1,21 @@
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Księga gości
+  body
+    h1 Księga gości
+    each entry in entries
+      div
+        strong= entry.name
+        p= entry.message
+    h2 Nowy wpis:
+    form(method="POST" action="/")
+      label(for="name") Twoje imię i nazwisko
+      input(name="name" required)
+      br
+      label(for="message") Treść wpisu
+      textarea(name="message" required)
+      br
+      input(type="submit")
+      input(type="reset")
