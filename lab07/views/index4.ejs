@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Księga gości</title>
+</head>
+<body>
+  <h1>Księga gości</h1>
+
+  <% if (entriesList && entriesList.length > 0) { %>
+    <% entriesList.forEach((entry) => { %>
+      <div>
+        <strong><%= entry.name %></strong>
+        <p><%= entry.message %></p>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>Brak wpisów w księdze gości.</p>
+  <% } %>
+
+  <h2>Nowy wpis:</h2>
+  <form method="POST" action="/">
+    <label for="name">Twoje imię i nazwisko</label>
+    <input name="name" required>
+    <br>
+    <label for="message">Treść wpisu</label>
+    <textarea name="message" required></textarea>
+    <br>
+    <input type="submit">
+    <input type="reset">
+  </form>
+</body>
+</html>
